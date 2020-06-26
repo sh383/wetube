@@ -3,8 +3,15 @@ header.header
         a(href=routes.home)
             i.fab.fa-youtube
     .header__column
+        form(action=routes.search, method = "get") 
+            input(type='text', placeholder = 'Search by term...', name = 'term')
+    .header__column
         ul  
             li
                 a(href=routes.join) Join 
             li
                 a(href=routes.login) Log in 
+
+                
+
+//- 컨트롤러가 query 에 접근하기 위해서는 method = "get" 이어야 함. post 와 다르게 주소에 표시
