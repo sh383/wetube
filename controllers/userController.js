@@ -24,8 +24,10 @@ export const postLogin = (req, res) => {
     res.redirect(routes.home);
     //데이터베이스와 대조 확인
 };
-export const logout = (req, res) =>
-  res.render("logout", { pageTitle: "Log Out" });
+export const logout = (req, res) =>{
+  //To Do: process log out
+  res.redirect(routes.home);
+}
 export const userDetail = (req, res) =>
   res.render("userDetail", { pageTitle: "User Detail" });
 export const editProfile = (req, res) =>

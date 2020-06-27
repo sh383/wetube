@@ -9,6 +9,7 @@ import {
 
 const userRouter = express.Router();
 
+//userDetail 함수 선언
 userRouter.get(routes.userDetail(), userDetail);
 userRouter.get(routes.editProfile, editProfile);
 userRouter.get(routes.changePassword, changePassword);
