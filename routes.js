@@ -30,12 +30,27 @@ const routes = {
     logout: LOGOUT,
     search: SEARCH,
     users: USERS,
-    userDetail: USER_DETAIL,
+    
+    // 함수화 시키자 웹이 :id 를 인식할 수 있도록
+    // userRouter 도 수정해서 함수를 실제로 실행해야 한다
+    userDetail: (id) => {
+        if (id) {
+            return `/users/${id}`;
+        } else {
+            return USER_DETAIL
+        }
+    },
     editProfile: EDIT_PROFILE,
     changePassword: CHANGE_PASSWORD,
     videos: VIDEOS,
     upload: UPLOAD,
-    videoDetail: VIDEO_DETAIL,
+    videoDetail: (id) => {
+        if(id){
+            return `/videos/${id}`;
+        } else {
+            return VIDEO_DETAIL;
+        }
+    },
     editVideo: EDIT_VIDEO,
     deleteVideo: DELETE_VIDEO
 };
