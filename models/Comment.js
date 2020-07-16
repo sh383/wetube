@@ -13,4 +13,4 @@ const CommentSchema = new mongoose.Schema({
 
 const model = mongoose.model("Comment", CommentSchema);
 export default model;
-© 2020 GitHub, Inc.
+//© 2020 GitHub, Inc.
