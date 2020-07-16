@@ -1,4 +1,7 @@
+import multer from "multer";
 import routes from "./routes";
+
+const multerVideo = multer({ dest: "videos/" });
 
 export const localsMiddleware = (req,res,next) => {
     //siteName 은 임의의 이름
@@ -12,3 +15,6 @@ export const localsMiddleware = (req,res,next) => {
     };
     next();
 };
+// single 은 한 파일만 올리도록
+export const uploadVideo = multerVideo.single("videoFile");
+// 이후에 router 에 uploadVideo 를 추가
