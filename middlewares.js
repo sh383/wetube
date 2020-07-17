@@ -1,7 +1,8 @@
 import multer from "multer";
 import routes from "./routes";
 
-const multerVideo = multer({ dest: "videos/" });
+// 만약 /uploads/videos/  이런식으로 쓰면 프로젝트 폴더가 아니라 컴퓨터의 root 폴더를 기준으로 저장
+const multerVideo = multer({ dest: "uploads/videos/" });
 
 export const localsMiddleware = (req,res,next) => {
     //siteName 은 임의의 이름
