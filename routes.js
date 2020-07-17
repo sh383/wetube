@@ -19,6 +19,7 @@ const CHANGE_PASSWORD= '/change-password';
 const VIDEOS = '/videos';
 const UPLOAD = '/upload';
 const VIDEO_DETAIL = '/:id';
+//컨트롤러에서 어떤 data를 가졌다는 것을 표현하고 싶다면 ':이름' console.log(req.params) 하면 이름을 logging 
 const EDIT_VIDEO = '/:id/edit';
 const DELETE_VIDEO = '/:id/delete';
 

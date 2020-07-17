@@ -40,9 +40,23 @@ export const postUpload = async (req, res) => {
   })
   res.redirect(routes.videoDetail(newVideo.id));
 };
-export const videoDetail = (req, res) =>
-res.render("videoDetail", { pageTitle: "Video Detail" });
-export const editVideo = (req, res) =>
-res.render("editVideo", { pageTitle: "Edit Video" });
+export const videoDetail = async(req, res) =>{
+  //id 를 console log // console.log(req.params),  주소값의 :name 라고 되어 있는 부분을 가져올 수 있음 ex) req.params.id
+  const {
+    params: {id}
+  } = req;
+  try {
+    const video = await Video.findById(id);
+    res.render("videoDetail", { pageTitle: "Video Detail", video });
+  } catch (error) {
+    console.log(error);
+    res.redirect(routes.home);
+  }
+}
+
+export const editVideo = (req, res) => {
+  res.render("editVideo", { pageTitle: "Edit Video" });
+}
+
 export const deleteVideo = (req, res) =>
 res.render("deleteVideo", { pageTitle: "Delete Video" });
