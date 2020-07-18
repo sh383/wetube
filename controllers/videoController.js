@@ -52,11 +52,36 @@ export const videoDetail = async(req, res) =>{
     console.log(error);
     res.redirect(routes.home);
   }
+};
+
+//get 은 뭔가를 채워 넣는 작업. post 는 update & redirect
+export const getEditVideo = async (req, res) => {
+  const {
+    params: {id}
+  } = req;
+  try {
+    const video = await Video.findById(id);
+    res.render("editVideo", {pageTitle: `Edit ${video.title}`, video });
+  } catch(error) {
+    res.redirect(routes.home);
+  }
 }
 
-export const editVideo = (req, res) => {
-  res.render("editVideo", { pageTitle: "Edit Video" });
-}
+export const postEditVideo = async (req, res) => {
+  const {
+    params: {id},
+    body: {title, description}
+  } = req;
+  try {
+    // update 하면 끝이라 변수에 저장하지 않고 바로 await 로 시작
+    // await Video.findOneAndUpdate({ _id: id});
+    // title 은 video model 의 videoSchema 의 요소와 같은 이름을 사용하여 title: title 로 인식함
+    await Video.findOneAndUpdate({ id },{ title, description });
+    res.redirect(routes.videoDetail(id));
+  } catch(error) {
+    res.redirect(routes.home);
+  }
+};
 
 export const deleteVideo = (req, res) =>
 res.render("deleteVideo", { pageTitle: "Delete Video" });
