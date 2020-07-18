@@ -47,7 +47,7 @@ export const videoDetail = async(req, res) =>{
   } = req;
   try {
     const video = await Video.findById(id);
-    res.render("videoDetail", { pageTitle: "Video Detail", video });
+    res.render("videoDetail", { pageTitle: video.title, video });
   } catch (error) {
     console.log(error);
     res.redirect(routes.home);
@@ -74,14 +74,20 @@ export const postEditVideo = async (req, res) => {
   } = req;
   try {
     // update 하면 끝이라 변수에 저장하지 않고 바로 await 로 시작
-    // await Video.findOneAndUpdate({ _id: id});
     // title 은 video model 의 videoSchema 의 요소와 같은 이름을 사용하여 title: title 로 인식함
-    await Video.findOneAndUpdate({ id },{ title, description });
+    await Video.findOneAndUpdate({ _id: id},{ title, description });
     res.redirect(routes.videoDetail(id));
   } catch(error) {
     res.redirect(routes.home);
   }
 };
 
-export const deleteVideo = (req, res) =>
-res.render("deleteVideo", { pageTitle: "Delete Video" });
+export const deleteVideo = async (req, res) => {
+  const {
+    params: {id}
+  } = req;
+  try {
+    await Video.findOneAndRemove({ _id: id });
+  } catch(error) {}
+  res.redirect(routes.home);
+}
