@@ -16,12 +16,22 @@ export const home = async (req, res) => {
   }
 };
 
-export const search = (req, res) => {
+export const search = async (req, res) => {
   const {
-    query: { term: searchingBy }
+    query: { term: searchingBy },
   } = req;
+  let videos = [];
+  try {
+    // title:searchingBy 하면 완전히 같은  단어를 검색
+    videos = await Video.find({
+      title: { $regex: searchingBy, $options: "i" },
+    }); // 어떤 단어를 포함하는 걸 모두 검색
+  } catch (error) {
+    console.log(error);
+  }
   res.render("search", { pageTitle: "Search", searchingBy, videos });
-}
+};
+
 export const getUpload = (req, res) =>
   res.render("upload", { pageTitle: "Upload" });
 
@@ -29,21 +39,21 @@ export const postUpload = async (req, res) => {
   const {
     body: { title, description },
     //const {body, file} 을 아래서 console.log(body,file); 로 출력하면 안에 path 값이 있음
-    file: { path }
+    file: { path },
   } = req;
 
   // To Do: Upload and save video
   const newVideo = await Video.create({
     fileUrl: path,
     title,
-    description
-  })
+    description,
+  });
   res.redirect(routes.videoDetail(newVideo.id));
 };
 export const videoDetail = async (req, res) => {
   //id 를 console log // console.log(req.params),  주소값의 :name 라고 되어 있는 부분을 가져올 수 있음 ex) req.params.id
   const {
-    params: { id }
+    params: { id },
   } = req;
   try {
     const video = await Video.findById(id);
@@ -57,7 +67,7 @@ export const videoDetail = async (req, res) => {
 //get 은 뭔가를 채워 넣는 작업. post 는 update & redirect
 export const getEditVideo = async (req, res) => {
   const {
-    params: { id }
+    params: { id },
   } = req;
   try {
     const video = await Video.findById(id);
@@ -65,12 +75,12 @@ export const getEditVideo = async (req, res) => {
   } catch (error) {
     res.redirect(routes.home);
   }
-}
+};
 
 export const postEditVideo = async (req, res) => {
   const {
     params: { id },
-    body: { title, description }
+    body: { title, description },
   } = req;
   try {
     // update 하면 끝이라 변수에 저장하지 않고 바로 await 로 시작
@@ -84,10 +94,10 @@ export const postEditVideo = async (req, res) => {
 
 export const deleteVideo = async (req, res) => {
   const {
-    params: { id }
+    params: { id },
   } = req;
   try {
     await Video.findOneAndRemove({ _id: id });
-  } catch (error) { }
+  } catch (error) {}
   res.redirect(routes.home);
 };
