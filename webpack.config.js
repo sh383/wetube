@@ -11,11 +11,19 @@ const ENTRY_FILE = path.resolve(__dirname, "assets", "js", "main.js");
 const OUTPUT_DIR = path.join(__dirname, "static");
 
 const config = {
-  entry: ENTRY_FILE,
+  entry: ["@babel/polyfill", ENTRY_FILE],
   mode: MODE,
   module: {
     // webpack 에게 .scss 파일을 만날 때마다 어떤 loader를 실행시켜라
     rules: [
+      {
+        test: /\.(js)$/,
+        use: [
+          {
+            loader: "babel-loader",
+          },
+        ],
+      },
       {
         test: /\.(scss)$/,
         //webpack 은 config 파일의 아래에서 위로 실행함
@@ -29,9 +37,9 @@ const config = {
             loader: "postcss-loader",
             options: {
               //plugin 은 function 이 됨
-              plugin() {
+              plugins() {
                 // 99.5% 가 사용하는 브라우저 모두에 적용
-                return [autoprefixer({ browsers: "cover 99.5%" })];
+                return [autoprefixer({ overrideBrowserslist: "cover 99.5%" })];
               },
             },
           },
