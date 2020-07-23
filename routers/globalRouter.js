@@ -6,7 +6,7 @@ import {
   logout,
   postJoin,
   getLogin,
-  postLogin
+  postLogin,
 } from "../controllers/userController";
 
 const globalRouter = express.Router();

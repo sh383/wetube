@@ -12,6 +12,6 @@ const UserSchema = new mongoose.Schema({
 // passportLocalMongoose 는 configuration object 가 필요
 UserSchema.plugin(passportLocalMongoose, { usernameField: "email" });
 
-const model = mongoose.Model("User", UserSchema);
+const model = mongoose.model("User", UserSchema);
 
 export default model;
