@@ -3,11 +3,14 @@ import morgan from "morgan";
 import helmet from "helmet";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
+import passport from "passport";
 import { localsMiddleware } from "./middlewares";
 import routes from "./routes";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
 import globalRouter from "./routers/globalRouter";
+
+import "./passport";
 
 const app = express();
 
@@ -20,6 +23,11 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("dev"));
+// 아래 두 과정은 middle
+// passport 가 스스로 쿠키를 들여다 보고 쿠키 정보에 해당하는 사용자를 찾아줌. 그 사용자를 request 의 object 인 req.user 에 저장함.
+app.use(passport.initialize());
+// session 을 저장. 이후 express-session 설치
+app.use(passport.session());
 
 //미들웨어, 파일로 따로 분리
 //맨 위에 놓음으로써 아래 코드들이 미들웨어, local 에 접근할 수 있도록

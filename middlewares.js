@@ -10,10 +10,7 @@ export const localsMiddleware = (req, res, next) => {
 
   //로컬로 등록해놔서 routes 를 아무데서나(global) 변수처럼 사용 가능. 사용자 정보를 저장하는 방법이 있음.
   res.locals.routes = routes;
-  res.locals.user = {
-    isAuthenticated: false,
-    id: 1,
-  };
+  res.locals.user = req.user || {}; // user 가 존재하거나 존재하지 않으면 비어있는 object를 반환
   next();
 };
 // single 은 한 파일만 올리도록
