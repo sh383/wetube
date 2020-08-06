@@ -3,9 +3,9 @@ import routes from "../routes";
 import { home, search } from "../controllers/videoController";
 import {
   getJoin,
+  getLogin,
   logout,
   postJoin,
-  getLogin,
   postLogin,
 } from "../controllers/userController";
 
