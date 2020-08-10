@@ -11,7 +11,7 @@ export const localsMiddleware = (req, res, next) => {
 
   //로컬로 등록해놔서 routes 를 아무데서나(global) 변수처럼 사용 가능. 사용자 정보를 저장하는 방법이 있음.
   res.locals.routes = routes;
-  res.locals.user = req.user || null; // user 가 존재하거나 존재하지 않으면 비어있는 object를 반환. req.user 는 이 어플 어디에나 있음. 쿠키를 사용하기 때문. 쿠키는 express 로 보내짐
+  res.locals.loggedUser /*res.locals.loggedUser*/ = req.user || null; // user 가 존재하거나 존재하지 않으면 비어있는 object를 반환. req.user 는 이 어플 어디에나 있음. 쿠키를 사용하기 때문. 쿠키는 express 로 보내짐
   next();
 };
 // 로그인 된 유저가 join 화면에 접속 못하도록
