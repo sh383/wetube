@@ -2,7 +2,9 @@ import multer from "multer";
 import routes from "./routes";
 
 // 만약 /uploads/videos/  이런식으로 쓰면 프로젝트 폴더가 아니라 컴퓨터의 root 폴더를 기준으로 저장
+// 좋은 방법은 아님. 나중에 아마존에 업로드 하는 방법을 설명할 예정
 const multerVideo = multer({ dest: "uploads/videos/" });
+const multerAvatar = multer({ dest: "uploads/avatar/" });
 
 // localsMiddleware 의 기능이 뭔지 헷갈림 (2020/08/06 #6.4 Sessions on Express)
 export const localsMiddleware = (req, res, next) => {
@@ -34,3 +36,4 @@ export const onlyPrivate = (req, res, next) => {
 // single 은 한 파일만 올리도록
 export const uploadVideo = multerVideo.single("videoFile");
 // 이후에 router 에 uploadVideo 를 추가
+export const uploadAvatar = multerAvatar.single("avatar");
