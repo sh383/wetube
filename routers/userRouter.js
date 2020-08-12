@@ -2,9 +2,10 @@ import express from "express";
 import routes from "../routes";
 import {
   userDetail,
-  changePassword,
+  getChangePassword,
   getEditProfile,
   postEditProfile,
+  postChangePassword,
 } from "../controllers/userController";
 import { onlyPrivate, uploadAvatar } from "../middlewares";
 
@@ -15,6 +16,7 @@ userRouter.get(routes.editProfile, onlyPrivate, getEditProfile);
 userRouter.post(routes.editProfile, onlyPrivate, uploadAvatar, postEditProfile);
 
 userRouter.get(routes.userDetail(), onlyPrivate, userDetail);
-userRouter.get(routes.changePassword, changePassword);
+userRouter.get(routes.changePassword, onlyPrivate, getChangePassword);
+userRouter.post(routes.changePassword, onlyPrivate, postChangePassword);
 
 export default userRouter;
