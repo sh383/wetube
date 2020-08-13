@@ -1,4 +1,5 @@
 extends layouts/main
+include mixins/videoBlock
 
 block content
     .form-container
@@ -9,11 +10,3 @@ block content
             input(type="text", placeholder="Name", name="name", value= loggedUser.name)
             input(type="email", placeholder="Email", name="email", value= loggedUser.email)
             input(type="submit", value="Update Profile")
-            
-//- extends layouts/main
-
-//- block content
-//-     .form__container
-//-         form(action=routes.editProfile, method="post" )
-//-             label(for='avatar') Avatar
-//-             input(type="file", id="avatar", name = "avatar")

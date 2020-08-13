@@ -2,6 +2,7 @@ import routes from "../routes";
 
 //element 를 받는 통로일 뿐 element 자체가 아님
 import Video from "../models/Video";
+import { Error } from "mongoose";
 
 export const home = async (req, res) => {
   //await 는 error 가 나도 어쨌든 그 줄이 끝나면 다음 줄을 실행하기 때문에, 에러를 잡기 위해 try, catch
@@ -56,14 +57,12 @@ export const postUpload = async (req, res) => {
 export const videoDetail = async (req, res) => {
   //id 를 console log // console.log(req.params),  주소값의 :name 라고 되어 있는 부분을 가져올 수 있음 ex) req.params.id
   const {
-    params: { id },
+    params: { id }, // id 는 video 의 id
   } = req;
   try {
     const video = await Video.findById(id).populate("creator"); //populate 는 objectID 타입에만 쓸 수 있다.
-    console.log(video);
     res.render("videoDetail", { pageTitle: video.title, video });
   } catch (error) {
-    console.log(error);
     res.redirect(routes.home);
   }
 };
@@ -75,7 +74,12 @@ export const getEditVideo = async (req, res) => {
   } = req;
   try {
     const video = await Video.findById(id);
-    res.render("editVideo", { pageTitle: `Edit ${video.title}`, video });
+    // 강의에선 !== 였는데
+    if (video.creator != req.user.id) {
+      throw Error();
+    } else {
+      res.render("editVideo", { pageTitle: `Edit ${video.title}`, video });
+    }
   } catch (error) {
     res.redirect(routes.home);
   }
@@ -101,9 +105,15 @@ export const deleteVideo = async (req, res) => {
     params: { id },
   } = req;
   try {
-    await Video.findOneAndRemove({ _id: id });
+    const video = await Video.findById(id);
+    // 강의에선 !== 였는데
+    if (video.creator != req.user.id) {
+      throw Error();
+    } else {
+      await Video.findOneAndRemove({ _id: id });
+    }
   } catch (error) {
-    //empty
+    console.log(error);
   }
   res.redirect(routes.home);
 };
