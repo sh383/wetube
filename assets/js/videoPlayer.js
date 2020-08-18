@@ -2,6 +2,7 @@ const videoContainer = document.getElementById("jsVideoPlayer");
 const videoPlayer = document.querySelector("#jsVideoPlayer video");
 const playBtn = document.getElementById("jsPlayButton");
 const volumeBtn = document.getElementById("jsVolumeBtn");
+const fullScrnBtn = document.getElementById("jsFullScreen");
 
 function handlePlayClick() {
   if (videoPlayer.paused) {
@@ -22,9 +23,24 @@ function handleVolumeClick() {
   }
 }
 
+function exitFullScreen() {
+  document.exitFullscreen();
+  fullScrnBtn.innerHTML = '<i class="fas fa-expand"></i>';
+  fullScrnBtn.addEventListener("click", goFullScreen);
+}
+
+function goFullScreen() {
+  // fullscreen 여부를 체크할 수는 없다
+  videoContainer.requestFullscreen();
+  fullScrnBtn.innerHTML = '<i class="fas fa-compress"></i>';
+  fullScrnBtn.removeEventListener("click", goFullScreen);
+  fullScrnBtn.addEventListener("click", exitFullScreen);
+}
+
 function init() {
   playBtn.addEventListener("click", handlePlayClick);
   volumeBtn.addEventListener("click", handleVolumeClick);
+  fullScrnBtn.addEventListener("click", goFullScreen);
 }
 
 if (videoContainer) {
