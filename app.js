@@ -13,6 +13,7 @@ import routes from "./routes";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
 import globalRouter from "./routers/globalRouter";
+import apiRouter from "./routers/apiRouter";
 
 import "./passport";
 
@@ -54,6 +55,7 @@ app.use(routes.home, globalRouter);
 // 누군가 user 에 접속하면 userRouter 를 사용하겠다는 의미
 app.use(routes.users, userRouter);
 app.use(routes.videos, videoRouter);
+app.use(routes.api, apiRouter);
 
 //Es6 모듈
 export default app;

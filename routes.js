@@ -32,6 +32,10 @@ const GITHUB_CALLBACK = "/auth/github/callback";
 const FB = "/auth/facebook";
 const FB_CALLBACK = "/auth/facebook/callback";
 
+// API. user 는 이 url 을 찾을 수도 없고, rendering 할 수도 없음
+const API = "/api";
+const REGISTER_VIEW = "/:id/view"; // 누군가 url로 가면 view 하나 증가
+
 const routes = {
   home: HOME,
   join: JOIN,
@@ -79,6 +83,8 @@ const routes = {
   me: ME,
   facebook: FB,
   facebookCallback: FB_CALLBACK,
+  api: API,
+  registerView: REGISTER_VIEW,
 };
 
 export default routes;
