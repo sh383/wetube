@@ -42,12 +42,12 @@ export const postUpload = async (req, res) => {
   const {
     body: { title, description },
     //const {body, file} 을 아래서 console.log(body,file); 로 출력하면 안에 path 값이 있음
-    file: { path },
+    file: { location }, // aws s3 는 path 대신 location
   } = req;
 
   // To Do: Upload and save video
   const newVideo = await Video.create({
-    fileUrl: path,
+    fileUrl: location,
     title,
     description,
     creator: req.user.id,

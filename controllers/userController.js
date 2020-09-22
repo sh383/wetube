@@ -131,7 +131,7 @@ export const postEditProfile = async (req, res) => {
       name,
       email,
       // user 가 file 을 업로드 하지 않으면 현재 있는 avatarUrl 을 넘겨줌
-      avatarUrl: file ? file.path : req.user.avatarUrl,
+      avatarUrl: file ? file.location : req.user.avatarUrl,
     });
     res.redirect(routes.me);
   } catch (error) {
