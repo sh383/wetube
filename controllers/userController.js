@@ -10,6 +10,7 @@ export const postJoin = async (req, res, next) => {
   const {
     body: { name, email, password, password2 },
   } = req;
+  console.log(req);
   if (password !== password2) {
     //wrong status code
     res.status(400);
