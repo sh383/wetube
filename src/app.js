@@ -1,3 +1,4 @@
+import "@babel/polyfill";
 import express from "express";
 import morgan from "morgan";
 import helmet from "helmet";
@@ -5,6 +6,7 @@ import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import passport from "passport";
 import mongoose from "mongoose";
+import path from "path";
 import session from "express-session";
 // 서버를 재시작해도 쿠키를 이용해 로그인 상태 유지하도록 하는 모듈
 import MongoStore from "connect-mongo";
@@ -23,9 +25,10 @@ const CokieStore = MongoStore(session);
 
 app.use(helmet());
 app.set("view engine", "pug");
+app.set("views", path.join(__dirname, "views"));
 // directory 에서 file 을 보내주는 middleware
-app.use("/uploads", express.static("uploads"));
-app.use("/static", express.static("static"));
+
+app.use("/static", express.static(path.join(__dirname, "static")));
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

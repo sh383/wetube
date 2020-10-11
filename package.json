@@ -5,6 +5,7 @@
   "author": "Sanghoon Shin",
   "license": "ISC",
   "dependencies": {
+    "@babel/cli": "^7.11.6",
     "@babel/core": "^7.10.2",
     "@babel/node": "^7.10.1",
     "@babel/polyfill": "^7.10.4",
@@ -16,6 +17,7 @@
     "body-parser": "^1.19.0",
     "connect-mongo": "^3.2.0",
     "cookie-parser": "^1.4.5",
+    "cross-env": "^7.0.2",
     "css-loader": "^3.6.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
@@ -40,9 +42,13 @@
     "webpack-cli": "^3.3.12"
   },
   "scripts": {
-    "dev:server": "nodemon --exec babel-node init.js --delay 2 --ignore '.scss' --ignore 'static'",
-    "dev:assets": "WEBPACK_ENV=development webpack -w",
-    "build:assets": "WEBPACK_ENV=productionn webpack"
+    "dev:server": "nodemon --exec babel-node src/init.js --delay 2 --ignore '.scss' --ignore 'static'",
+    "dev:assets": "WEBPACK_ENV=development cd src && webpack --mode development -w",
+    "build:assets": "WEBPACK_ENV=production cd src && webpack --mode production",
+    "build:server": "babel src --out-dir build  --ignore 'src/assets' --ignore 'src/static' --ignore 'src/webpack.config.js'",
+    "build": "npm run build:server && npm run build:assets && cp -R src/static build && cp -R src/views build",
+    "prebuild": "rm -rf build",
+    "start": "node build/init.js"
   },
   "devDependencies": {
     "eslint": "^7.5.0",
