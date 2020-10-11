@@ -35,7 +35,7 @@ app.use(
   session({
     secret: process.env.COOKIE_SECRET,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     store: new CokieStore({ mongooseConnection: mongoose.connection }),
   })
 );
